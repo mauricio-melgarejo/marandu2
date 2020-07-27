@@ -1,0 +1,408 @@
+<div class="m-5">
+    <table mdbTable #tableEl="mdbTable" class="z-depth-1 p-5">
+        <thead>
+
+            <th class="" colspan="6">
+                <div class="row align-items-center justify-content-end">
+                    <div class="col-md-10">{{titulo.toUpperCase()}}</div>
+                    <div class="col-md-2 pl-5" *ngIf="tipoTabla.toString() === 'cargo'; then btnCargo else btnTipo">
+                    </div>
+                    <ng-template #btnCargo>
+                        <button class="" type="button" data-target="#basicExample" data-toggle="modal" mat-raised-button
+                            color="primary" (click)="addCargo.show()" mdbWavesEffect>
+                            <mat-icon aria-hidden="false" aria-label="edit icon">add</mat-icon>
+                        </button>
+                    </ng-template>
+
+                    <ng-template #btnTipo>
+                        <button class="" type="button" data-target="#basicExample" data-toggle="modal" mat-raised-button
+                            color="primary" (click)="addTipo.show()" mdbWavesEffect>
+                            <mat-icon aria-hidden="false" aria-label="edit icon">add</mat-icon>
+                        </button>
+                    </ng-template>
+
+                </div>
+
+            </th>
+            <tr>
+                <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let el of elements; let i = index">
+                <div *ngIf="tipoTabla.toString() === 'cargo'; then cargo else tipos"></div>
+
+                <ng-template #cargo>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{ el.id }}
+                    </td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{ el.tipoCargo.id }}
+                    </td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{ el.cantidad }}
+                    </td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{ el.tipoEntidad.id }}
+                    </td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{ el.estado }}
+                    </td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+                        class="btnAccion">
+                        <div class="d-inline">
+                            <button type="button" data-target="#basicExample" data-toggle="modal" mat-raised-button
+                                color="primary" (click)="frame.show()" mdbWavesEffect>
+                                <mat-icon aria-hidden="false" aria-label="edit icon">edit</mat-icon>
+                            </button>
+
+
+                            <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1"
+                                role="dialog" [config]='{backdrop: false, ignoreBackdropClick: false}'
+                                aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-notify modal-warning" role="document">
+                                    <!--Content-->
+                                    <div class="modal-content">
+                                        <!--Header-->
+                                        <div class="modal-header text-center">
+                                            <h4 class="modal-title white-text w-100 font-weight-bold py-2">Editar</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                                (click)="frame.hide()">
+                                                <span aria-hidden="true" class="white-text">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <!--Body-->
+                                        <div class="modal-body">
+                                            <div class="md-form mb-5">
+                                                <mdb-icon fas icon="edit" class="prefix grey-text"></mdb-icon>
+                                                <input type="text" id="form1" class="form-control" mdbInput mdbValidate
+                                                    [formControl]="Id">
+                                                <label for="form1">Id</label>
+                                                <mdb-error *ngIf="Id.invalid && (Id.dirty || Id.touched)">
+                                                    Input invalid
+                                                </mdb-error>
+                                                <mdb-success *ngIf="Id.valid && (Id.dirty || Id.touched)">
+                                                    Input valid
+                                                </mdb-success>
+                                            </div>
+
+                                            <div class="md-form">
+                                                <mdb-icon fas icon="edit" class="prefix grey-text"></mdb-icon>
+                                                <input type="text" id="form2" class="form-control" mdbInput mdbValidate
+                                                    [formControl]="tipoCargo">
+                                                <label for="form2">Tipo de cargo</label>
+                                                <mdb-error
+                                                    *ngIf="tipoCargo.invalid && (tipoCargo.dirty || tipoCargo.touched)">
+                                                    Input invalid
+                                                </mdb-error>
+                                                <mdb-success
+                                                    *ngIf="tipoCargo.valid && (tipoCargo.dirty || tipoCargo.touched)">
+                                                    Input valid
+                                                </mdb-success>
+                                            </div>
+                                            <div class="md-form">
+                                                <mdb-icon fas icon="edit" class="prefix grey-text"></mdb-icon>
+                                                <input type="text" id="form3" class="form-control" mdbInput mdbValidate
+                                                    [formControl]="cantidad">
+                                                <label for="form3">Cantidad</label>
+                                                <mdb-error
+                                                    *ngIf="cantidad.invalid && (cantidad.dirty || cantidad.touched)">
+                                                    Input invalid
+                                                </mdb-error>
+                                                <mdb-success
+                                                    *ngIf="cantidad.valid && (cantidad.dirty || cantidad.touched)">
+                                                    Input valid
+                                                </mdb-success>
+                                            </div>
+                                            <div class="md-form">
+                                                <mdb-icon fas icon="edit" class="prefix grey-text"></mdb-icon>
+                                                <input type="text" id="form4" class="form-control" mdbInput mdbValidate
+                                                    [formControl]="tipoEntidad">
+                                                <label for="form4">Tipo de entidad</label>
+                                                <mdb-error
+                                                    *ngIf="tipoEntidad.invalid && (tipoEntidad.dirty || tipoEntidad.touched)">
+                                                    Input invalid
+                                                </mdb-error>
+                                                <mdb-success
+                                                    *ngIf="tipoEntidad.valid && (tipoEntidad.dirty || tipoEntidad.touched)">
+                                                    Input valid
+                                                </mdb-success>
+                                            </div>
+                                            <div class="md-form">
+                                                <mdb-icon fas icon="edit" class="prefix grey-text"></mdb-icon>
+                                                <input type="text" id="form5" class="form-control" mdbInput mdbValidate
+                                                    [formControl]="estado">
+                                                <label for="form5">estado</label>
+                                                <mdb-error *ngIf="estado.invalid && (estado.dirty || estado.touched)">
+                                                    Input invalid
+                                                </mdb-error>
+                                                <mdb-success *ngIf="estado.valid && (estado.dirty || estado.touched)">
+                                                    Input valid
+                                                </mdb-success>
+                                            </div>
+                                        </div>
+
+                                        <!--Footer-->
+                                        <div class="modal-footer justify-content-center">
+                                            <a type="button" mdbBtn color="warning" outline="true" class="waves-effect"
+                                                (click)="onEdit(el ,this)" mdbWavesEffect>Send
+                                                <mdb-icon far icon="paper-plane" class="ml-1"></mdb-icon>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!--/.Content-->
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class=""><button mat-raised-button color="warn" (click)="onDelete(el.userId, el.id)">
+                                <mat-icon aria-hidden="false" aria-label="delete icon">delete</mat-icon>
+                            </button></div>
+                    </td>
+                </ng-template>
+
+                <ng-template #tipos>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{ el.id }}
+                    </td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{ el.nombre }}
+                    </td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{ el.estado }}
+                    </td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+                        class="btnAccion">
+                        <div class="d-inline">
+                            <button type="button" data-target="#basicExample" data-toggle="modal" mat-raised-button
+                                color="primary" (click)="frame.show()" mdbWavesEffect>
+                                <mat-icon aria-hidden="false" aria-label="edit icon">edit</mat-icon>
+                            </button>
+
+
+                            <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1"
+                                role="dialog" [config]='{backdrop: false, ignoreBackdropClick: false}'
+                                aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-notify modal-warning" role="document">
+                                    <!--Content-->
+                                    <div class="modal-content">
+                                        <!--Header-->
+                                        <div class="modal-header text-center">
+                                            <h4 class="modal-title white-text w-100 font-weight-bold py-2">Editar</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                                (click)="frame.hide()">
+                                                <span aria-hidden="true" class="white-text">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <!--Body-->
+                                        <div class="modal-body">
+                                            <div class="md-form mb-5">
+                                                <mdb-icon fas icon="edit" class="prefix grey-text"></mdb-icon>
+                                                <input type="text" id="form6" class="form-control" mdbInput mdbValidate
+                                                    [formControl]="nombre">
+                                                <label for="form6">Nombre</label>
+                                                <mdb-error *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                                                    Input invalid
+                                                </mdb-error>
+                                                <mdb-success *ngIf="nombre.valid && (nombre.dirty || nombre.touched)">
+                                                    Input valid
+                                                </mdb-success>
+                                            </div>
+
+                                            <div class="md-form">
+                                                <mdb-icon fas icon="edit" class="prefix grey-text"></mdb-icon>
+                                                <input type="text" id="form7" class="form-control" mdbInput mdbValidate
+                                                    [formControl]="estado">
+                                                <label for="form7">Estado</label>
+                                                <mdb-error *ngIf="estado.invalid && (estado.dirty || estado.touched)">
+                                                    Input invalid
+                                                </mdb-error>
+                                                <mdb-success *ngIf="estado.valid && (estado.dirty || estado.touched)">
+                                                    Input valid
+                                                </mdb-success>
+                                            </div>
+                                        </div>
+
+                                        <!--Footer-->
+                                        <div class="modal-footer justify-content-center">
+                                            <a type="button" mdbBtn color="warning" outline="true" class="waves-effect"
+                                                (click)="onEdit(el ,this)" mdbWavesEffect>Send
+                                                <mdb-icon far icon="paper-plane" class="ml-1"></mdb-icon>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!--/.Content-->
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class=""><button mat-raised-button color="warn" (click)="onDelete(el.userId, el.id)">
+                                <mat-icon aria-hidden="false" aria-label="delete icon">delete</mat-icon>
+                            </button></div>
+                    </td>
+                </ng-template>
+
+
+            </tr>
+        </tbody>
+        <tfoot class="grey lighten-5 w-100">
+            <tr>
+
+                <td colspan="6">
+                    <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
+                </td>
+
+            </tr>
+
+        </tfoot>
+    </table>
+</div>
+
+
+
+<div mdbModal #addCargo="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog"
+    [config]='{backdrop: false, ignoreBackdropClick: false}' aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-warning" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header text-center">
+                <h4 class="modal-title white-text w-100 font-weight-bold py-2">Editar</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="addCargo.hide()">
+                    <span aria-hidden="true" class="white-text">&times;</span>
+                </button>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+                <div class="md-form mb-5">
+                    <mdb-icon fas icon="edit" class="prefix grey-text"></mdb-icon>
+                    <input type="text" id="form8" class="form-control" mdbInput mdbValidate [formControl]="Id">
+                    <label for="form8">Id</label>
+                    <mdb-error *ngIf="Id.invalid && (Id.dirty || Id.touched)">
+                        Input invalid
+                    </mdb-error>
+                    <mdb-success *ngIf="Id.valid && (Id.dirty || Id.touched)">
+                        Input valid
+                    </mdb-success>
+                </div>
+
+                <div class="md-form">
+                    <mdb-icon fas icon="edit" class="prefix grey-text"></mdb-icon>
+                    <input type="text" id="form9" class="form-control" mdbInput mdbValidate [formControl]="tipoCargo">
+                    <label for="form9">Tipo de cargo</label>
+                    <mdb-error *ngIf="tipoCargo.invalid && (tipoCargo.dirty || tipoCargo.touched)">
+                        Input invalid
+                    </mdb-error>
+                    <mdb-success *ngIf="tipoCargo.valid && (tipoCargo.dirty || tipoCargo.touched)">
+                        Input valid
+                    </mdb-success>
+                </div>
+                <div class="md-form">
+                    <mdb-icon fas icon="edit" class="prefix grey-text"></mdb-icon>
+                    <input type="text" id="form10" class="form-control" mdbInput mdbValidate [formControl]="cantidad">
+                    <label for="form10">Cantidad</label>
+                    <mdb-error *ngIf="cantidad.invalid && (cantidad.dirty || cantidad.touched)">
+                        Input invalid
+                    </mdb-error>
+                    <mdb-success *ngIf="cantidad.valid && (cantidad.dirty || cantidad.touched)">
+                        Input valid
+                    </mdb-success>
+                </div>
+                <div class="md-form">
+                    <mdb-icon fas icon="edit" class="prefix grey-text"></mdb-icon>
+                    <input type="text" id="form11" class="form-control" mdbInput mdbValidate
+                        [formControl]="tipoEntidad">
+                    <label for="form11">Tipo de entidad</label>
+                    <mdb-error *ngIf="tipoEntidad.invalid && (tipoEntidad.dirty || tipoEntidad.touched)">
+                        Input invalid
+                    </mdb-error>
+                    <mdb-success *ngIf="tipoEntidad.valid && (tipoEntidad.dirty || tipoEntidad.touched)">
+                        Input valid
+                    </mdb-success>
+                </div>
+                <div class="md-form">
+                    <mdb-icon fas icon="edit" class="prefix grey-text"></mdb-icon>
+                    <input type="text" id="form12" class="form-control" mdbInput mdbValidate [formControl]="estado">
+                    <label for="form12">estado</label>
+                    <mdb-error *ngIf="estado.invalid && (estado.dirty || estado.touched)">
+                        Input invalid
+                    </mdb-error>
+                    <mdb-success *ngIf="estado.valid && (estado.dirty || estado.touched)">
+                        Input valid
+                    </mdb-success>
+                </div>
+            </div>
+
+            <!--Footer-->
+            <div class="modal-footer justify-content-center">
+                <a type="button" mdbBtn color="warning" outline="true" class="waves-effect"
+                    (click)="onCreateCargo(this)" mdbWavesEffect>Cargar
+                    <mdb-icon far icon="paper-plane" class="ml-1"></mdb-icon>
+                </a>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+
+<div mdbModal #addTipo="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog"
+    [config]='{backdrop: false, ignoreBackdropClick: false}' aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-warning" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header text-center">
+                <h4 class="modal-title white-text w-100 font-weight-bold py-2">Editar</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="addTipo.hide()">
+                    <span aria-hidden="true" class="white-text">&times;</span>
+                </button>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+                <div class="md-form mb-5">
+                    <mdb-icon fas icon="edit" class="prefix grey-text"></mdb-icon>
+                    <input type="text" id="form14" class="form-control" mdbInput mdbValidate [formControl]="Id">
+                    <label for="form14">Id</label>
+                    <mdb-error *ngIf="Id.invalid && (Id.dirty || Id.touched)">
+                        Input invalid
+                    </mdb-error>
+                    <mdb-success *ngIf="Id.valid && (Id.dirty || Id.touched)">
+                        Input valid
+                    </mdb-success>
+                </div>
+                <div class="md-form mb-5">
+                    <mdb-icon fas icon="edit" class="prefix grey-text"></mdb-icon>
+                    <input type="text" id="form13" class="form-control" mdbInput mdbValidate [formControl]="nombre">
+                    <label for="form13">Nombre</label>
+                    <mdb-error *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                        Input invalid
+                    </mdb-error>
+                    <mdb-success *ngIf="nombre.valid && (nombre.dirty || nombre.touched)">
+                        Input valid
+                    </mdb-success>
+                </div>
+
+                <div class=" custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="estadocheck" checked mdbValidate
+                        [formControl]="estado">
+                    <label class="custom-control-label" for="estadocheck">Estado</label>
+                </div>
+            </div>
+
+            <!--Footer-->
+            <div class="modal-footer justify-content-center">
+                <a type="button" mdbBtn color="warning" outline="true" class="waves-effect"
+                    (click)="onCreate(tipoTabla,this)" mdbWavesEffect>Cargar
+                    <mdb-icon far icon="paper-plane" class="ml-1"></mdb-icon>
+                </a>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
